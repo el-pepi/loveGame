@@ -10,6 +10,12 @@ newball = function()
 	
 	ball.image = love.graphics.newImage("sprites/ball.png")
 	
+	shadow = {}
+	shadow.img = love.graphics.newImage("sprites/shadow.png")
+	shadow.width = shadow.img:getWidth()
+	shadow.height = shadow.img:getHeight()
+	shadow.size = 1
+	
 	ball.width = ball.image:getWidth()
 	ball.height = ball.image:getHeight()
 	
@@ -36,12 +42,19 @@ newball = function()
 			ball.vel.x = ball.vel.x * -0.5
 		end
 		
-		ball.x = ball.x + ball.vel.x * dt;
+		ball.x = ball.x + ball.vel.x * dt
 		
-		ball.rot = ball.rot + ball.vel.x * dt;
+		ball.rot = ball.rot + ball.vel.x * dt
+		
+		shadow.size = ball.y * 0.002
+		if shadow.size < 0.1 then
+			shadow.size = 0.1
+		end
 	end
 	
 	ball.draw = function()
+		love.graphics.draw(shadow.img , ball.x, ground + 70 , 0,shadow.size,shadow.size,shadow.width/2,shadow.height/2)
+
 		love.graphics.draw(ball.image, ball.x, ball.y, ball.rot * 0.01, ballSize, ballSize, ball.width/2, ball.height/2)
 	end
 	
